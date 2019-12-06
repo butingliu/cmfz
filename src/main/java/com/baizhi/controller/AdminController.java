@@ -28,6 +28,7 @@ public class AdminController {
     public String login(String vrifyCode, String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String captchaId = (String) request.getSession().getAttribute("vrifyCode");
         System.out.println("吃饭");
+        System.out.println("喝酒");
 
         Admin admin = adminService.queryAdminByName(username);
         if (!captchaId.equals(vrifyCode)) {
