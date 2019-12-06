@@ -1,6 +1,8 @@
 package com.baizhi.service;
 
 import com.baizhi.annotation.LogAnnotation;
+import com.baizhi.annotation.RedisAnnotation;
+import com.baizhi.annotation.RedisRemoveAnnotation;
 import com.baizhi.dao.BannerDao;
 import com.baizhi.entity.Banner;
 import org.apache.ibatis.session.RowBounds;
@@ -17,10 +19,12 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     private BannerDao bannerDao;
 
+
     @Override
     public List<Banner> queryAllBanner() {
         return bannerDao.selectAll();
     }
+
 
     @Override
     public List<Banner> queryBannerByRows(String searchField, String searchString, String searchOper, Integer page, Integer rows) {
@@ -33,23 +37,27 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @RedisRemoveAnnotation
     public void deleteBanner(String id) {
         bannerDao.deleteByPrimaryKey(id);
     }
 
     @Override
+    @RedisRemoveAnnotation
     public void modifyBanner(Banner banner) {
 
         bannerDao.updateByPrimaryKeySelective(banner);
     }
 
     @Override
+    @RedisRemoveAnnotation
     public void addBanner(Banner banner) {
         bannerDao.insert(banner);
     }
 
     @Override
-    @LogAnnotation("展示轮播图列表")
+    @RedisAnnotation
+    //@LogAnnotation("展示轮播图列表")
     public List<Banner> queryBannerByPage(Integer page, Integer rows) {
         return bannerDao.selectByRowBounds(new Banner(), new RowBounds(page, rows));
     }
@@ -60,9 +68,11 @@ public class BannerServiceImpl implements BannerService {
         Banner banner = new Banner();
         banner.setId(id);
         return bannerDao.selectOne(banner);
+
     }
 
     @Override
+    @RedisRemoveAnnotation
     public void deleteBanner(String[] as) {
         bannerDao.deleteByIdList(Arrays.asList(as));
     }

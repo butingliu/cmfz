@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.RedisAnnotation;
 import com.baizhi.dao.ArticleDao;
 import com.baizhi.entity.Article;
 import org.apache.ibatis.session.RowBounds;
@@ -47,6 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @RedisAnnotation()
     public List<Article> queryAllArticle() {
         return articleDao.selectAll();
     }
