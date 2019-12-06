@@ -29,7 +29,7 @@ public class AdminController {
         String captchaId = (String) request.getSession().getAttribute("vrifyCode");
         System.out.println("吃饭");
         System.out.println("喝酒");
-
+        System.out.println("玩耍");
         Admin admin = adminService.queryAdminByName(username);
         if (!captchaId.equals(vrifyCode)) {
             return "验证码错误";
