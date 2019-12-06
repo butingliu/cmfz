@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.BannerDao">
+    <select id="queryBannerByRows" resultType="Banner">
+        select id,name,pic,edit,uris,status,create_date from banner limit #{page},#{rows}
+        <where>
+            <if test="searchOper=='eq'">
+                ${searchField} = #{searchString}
+            </if>
+            <if test="searchOper=='ne'">
+                ${searchField} != #{searchString}
+            </if>
+            <if test="searchOper=='cn'">
+                ${searchField} like concat('%',#{searchString},'%')
+            </if>
+        </where>
+    </select>
+    <select id="queryBannerCount" resultType="Banner">
+        select id,name,pic,edit,uris,status,create_date from banner
+        <where>
+            <if test="searchOper=='eq'">
+                ${searchField} = #{searchString}
+            </if>
+            <if test="searchOper=='ne'">
+                ${searchField} != #{searchString}
+            </if>
+            <if test="searchOper=='cn'">
+                ${searchField} like concat('%',#{searchString},'%')
+            </if>
+        </where>
+    </select>
+    <select id="queryAllBannerBypage" resultType="Banner">
+        select id,name,pic,edit,uris,status,create_date from banner limit #{page},#{rows}
+    </select>
+
+
+</mapper>

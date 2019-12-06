@@ -1,0 +1,77 @@
+forpic{
+	//轮播图表
+	String id;
+	String name;
+	String pic;
+	String status;
+	String uri;
+}
+zhuanji{
+	//甘露明珠-专辑表
+	String id;
+	String name;
+	String pic;
+	String author;
+	String boyin;
+	date cratedate;
+	String content;
+}
+zhangjie{
+	//甘露明珠-章节表
+	String id;
+	String name;
+	String auto;
+	String pid;//专辑表id
+}
+wenzhang{
+	//文章表
+	String id;
+	String name;
+	String author;
+	date createdate;
+	String pic;
+	String content;
+	String sid;//上师表id
+}
+shangshi{
+	//上师表
+	String id;
+	String name;
+	String password;//预设属性
+	String pic;
+}
+user{
+	//用户表
+	String id;
+	String username;
+	String realname;
+	String password;
+	String pic;
+	String phone;
+	String status;
+	String salt;
+	String adress;
+	String sid;//上师表id
+}
+work{
+	//功课表
+	String id;
+	String name;
+	boolean flag;//属性为true的为必修课，为false的为选修课
+	String uid;//用户表id
+}
+count{
+	//计数表
+	String id;
+	Interge count;
+	String name;
+	date timedate;
+	String wid;//功课表id
+}
+admin{
+	//管理员表
+	String id;
+	String name;
+	String password;
+}
+
