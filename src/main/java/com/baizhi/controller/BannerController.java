@@ -2,23 +2,16 @@ package com.baizhi.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.support.ExcelTypeEnum;
-import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baizhi.entity.Banner;
 import com.baizhi.entity.Banner1;
 import com.baizhi.service.BannerService;
 import com.baizhi.util.HttpUtil;
-import org.apache.commons.fileupload.util.LimitedInputStream;
-import org.apache.jasper.tagplugins.jstl.core.Url;
-import org.aspectj.lang.annotation.DeclareAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,8 +29,9 @@ public class BannerController {
     //private String fileName=
     @Autowired
     private BannerService bannerService;
+
     @RequestMapping("showbanner")
-    public Map<String,Object> showBanner(String searchField,String searchString,String searchOper,Integer page, Integer records,Integer rows,Boolean _search){
+    public Map<String, Object> showBanner(String searchField, String searchString, String searchOper, Integer page, Integer records, Integer rows, Boolean _search) {
         /*if(_search){
             List<Banner> list = bannerService.queryBannerByRows(searchField, searchString, searchOper, (page - 1) * rows, rows);
             List<Banner> banners = bannerService.queryBannerCount(searchField, searchString, searchOper);
@@ -54,80 +48,82 @@ public class BannerController {
             map.put("rows",list);
             return map;
         }else{*/
-            List<Banner> banners = bannerService.queryAllBanner();
-            Integer sq = banners.size();
-            Integer a=0;
-            if(sq%rows==0){
-                a = sq/rows;
-            }else {
-                a =sq/rows+1;
-            }
-            List<Banner> b1 = bannerService.queryBannerByPage((page - 1) * rows, rows);
-            Map<String,Object> map = new HashMap<String, Object>();
-            map.put("records",sq);
-            map.put("total",a);
-            map.put("rows",b1);
-            return  map;
+        List<Banner> banners = bannerService.queryAllBanner();
+        Integer sq = banners.size();
+        Integer a = 0;
+        if (sq % rows == 0) {
+            a = sq / rows;
+        } else {
+            a = sq / rows + 1;
+        }
+        List<Banner> b1 = bannerService.queryBannerByPage((page - 1) * rows, rows);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("records", sq);
+        map.put("total", a);
+        map.put("rows", b1);
+        return map;
 
     }
+
     @RequestMapping("crut")
-    public Map<String,String> crutBanner(String oper, Banner banner,String[] id)  {
-        Map<String,String> map=new HashMap<>();
-        if(oper.equals("del")){
+    public Map<String, String> crutBanner(String oper, Banner banner, String[] id) {
+        Map<String, String> map = new HashMap<>();
+        if (oper.equals("del")) {
             //bannerService.deleteBanner(banner.getId());
             bannerService.deleteBanner(id);
-            map.put("status","delOk");
+            map.put("status", "delOk");
             return map;
-        }else if(oper.equals("add")){
-            String x= UUID.randomUUID().toString();
+        } else if (oper.equals("add")) {
+            String x = UUID.randomUUID().toString();
             banner.setId(x);
             bannerService.addBanner(banner);
-            map.put("status","addOk");
-            map.put("id",x);
+            map.put("status", "addOk");
+            map.put("id", x);
             return map;
-        }else {
+        } else {
             System.out.println(banner);
             Banner banner1 = bannerService.selectBanner(banner.getId());
-            if(banner.getPic().equals("")||banner.getPic().equals(null)){
+            if (banner.getPic().equals("") || banner.getPic().equals(null)) {
                 banner.setPic(banner1.getPic());
             }
             bannerService.modifyBanner(banner);
-            System.out.println("2:"+banner);
-            map.put("status","editOK");
-            map.put("id",banner.getId());
+            System.out.println("2:" + banner);
+            map.put("status", "editOK");
+            map.put("id", banner.getId());
             return map;
         }
 
     }
+
     @RequestMapping("upload")
-    public void upload(MultipartFile pic, String id, HttpSession session,HttpServletRequest request) throws IOException {
+    public void upload(MultipartFile pic, String id, HttpSession session, HttpServletRequest request) throws IOException {
         String oldname = pic.getOriginalFilename();
         String extend = oldname.substring(oldname.indexOf("."));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmsSS");
         String format = sdf.format(new Date());
-        String newName=format+extend;
-        File file=new File(session.getServletContext().getRealPath("/back/banner"),newName);
+        String newName = format + extend;
+        File file = new File(session.getServletContext().getRealPath("/back/banner"), newName);
         //pic.transferTo(file);
         String uri = HttpUtil.getHttpUrl(pic, request, request.getSession(), "/back/banner/");
         Banner banner = new Banner();
         banner.setId(id);
-                banner.setPic(uri);
+        banner.setPic(uri);
         bannerService.modifyBanner(banner);
     }
 
     @RequestMapping("upload1")
-    public void upload1(MultipartFile pic, String id, HttpSession session,HttpServletRequest request) throws IOException {
-        int a=2;
+    public void upload1(MultipartFile pic, String id, HttpSession session, HttpServletRequest request) throws IOException {
+        int a = 2;
         String oldname = pic.getOriginalFilename();
-        if(pic.getOriginalFilename().equals("")||pic.getOriginalFilename().equals(null)){
-            a=1;
+        if (pic.getOriginalFilename().equals("") || pic.getOriginalFilename().equals(null)) {
+            a = 1;
         }
-        if(a==2){
+        if (a == 2) {
             String extend = oldname.substring(oldname.indexOf("."));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmsSS");
             String format = sdf.format(new Date());
-            String newName=format+extend;
-            File file=new File(session.getServletContext().getRealPath("/back/banner"),newName);
+            String newName = format + extend;
+            File file = new File(session.getServletContext().getRealPath("/back/banner"), newName);
             //pic.transferTo(file);
             String uri = HttpUtil.getHttpUrl(pic, request, request.getSession(), "/back/banner/");
             Banner banner = new Banner();
@@ -137,8 +133,9 @@ public class BannerController {
         }
 
     }
+
     @RequestMapping("downloadRowData")
-    public void downloadRowData(HttpServletResponse response)throws Exception{
+    public void downloadRowData(HttpServletResponse response) throws Exception {
         /*List<Banner> list = bannerService.queryAllBanner();
         Workbook workbook = new HSSFWorkbook();
         String[] a={"标题","状态","描述","创建时间"};
@@ -177,7 +174,7 @@ public class BannerController {
     }
 
     @RequestMapping("downloadRowData1")
-    public void downloadRowData1(HttpServletResponse response)throws Exception{
+    public void downloadRowData1(HttpServletResponse response) throws Exception {
         /*String fileName="E:\\"+new Date().getTime()+"轮播图信息.xlsx";
 
         //response.setContentType("application/vnd.ms-excel;charset=utf-8");
@@ -203,17 +200,17 @@ public class BannerController {
             banner1.setId(b.getId()).setName(b.getName()).setPic(b.getPic()).setCreate_date(b.getCreate_date()).setEdit(b.getEdit()).setStatus(b.getStatus());
             banner1.setUrl(new URL(b.getPic()));
             //b.setPic(new URL(pic));
-           // b.setPic("F:\\Third\\work\\cmfz\\src\\main\\webapp\\back\\banner\\1575289590276_lol娑娜大胸白丝4k壁纸_彼岸图网.jpg");
+            // b.setPic("F:\\Third\\work\\cmfz\\src\\main\\webapp\\back\\banner\\1575289590276_lol娑娜大胸白丝4k壁纸_彼岸图网.jpg");
             ba.add(banner1);
         }
         OutputStream outputStream = response.getOutputStream();
         ExcelWriter write = EasyExcel.write(outputStream, Banner1.class).build();
         WriteSheet sheet = EasyExcel.writerSheet("轮播图信息").build();
-        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("轮播图信息.xlsx","UTF-8"));
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("轮播图信息.xlsx", "UTF-8"));
         response.setContentType("application/msexcel;charset=UTF-8");//设置类型
         write.write(ba, sheet);
         write.finish();
-       // ExcelWriter writer = new ExcelWriter(outputStream, ExcelTypeEnum.XLS, true);
+        // ExcelWriter writer = new ExcelWriter(outputStream, ExcelTypeEnum.XLS, true);
 //        writer.write(list, sheet);
 //        writer.finish();
 //

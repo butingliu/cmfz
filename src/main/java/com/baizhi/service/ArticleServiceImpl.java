@@ -43,7 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> queryArticleByPage(Integer page, Integer rows) {
-        return articleDao.selectByRowBounds(new Article(),new RowBounds((page-1)*rows,rows));
+        return articleDao.selectByRowBounds(new Article(), new RowBounds((page - 1) * rows, rows));
     }
 
     @Override

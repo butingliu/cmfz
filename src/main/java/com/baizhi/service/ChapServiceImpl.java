@@ -17,7 +17,7 @@ public class ChapServiceImpl implements ChapService {
 
     @Override
     public List<Chap> queryChapByPage(String fid, Integer page, Integer rows) {
-        return chapDao.selectByRowBounds(new Chap().setAl_id(fid),new RowBounds((page-1)*rows,rows));
+        return chapDao.selectByRowBounds(new Chap().setAl_id(fid), new RowBounds((page - 1) * rows, rows));
     }
 
     @Override

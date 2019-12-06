@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class TestSend {
     @Test
-    public void qq(){
+    public void qq() {
         SmsSample smsSample = new SmsSample();
-        smsSample.qq("13193755071","666666");
+        smsSample.qq("13193755071", "666666");
     }
 }

@@ -10,7 +10,7 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object admin = request.getSession().getAttribute("admin");
-        if(admin==null){
+        if (admin == null) {
             response.sendRedirect("/back/login.jsp");
             return false;
         }

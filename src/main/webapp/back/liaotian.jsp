@@ -18,7 +18,7 @@
     <script>
         $(function () {
             var goEasy = new GoEasy({
-                host:'hangzhou.goeasy.io', //应用所在的区域地址: 【hangzhou.goeasy.io |singapore.goeasy.io】
+                host: 'hangzhou.goeasy.io', //应用所在的区域地址: 【hangzhou.goeasy.io |singapore.goeasy.io】
                 appkey: "BC-de6afd1d1d3649e49dc345c422be940b", //替换为您的应用appkey
                 onConnected: function () {
                     alert("上线一人");
@@ -31,25 +31,25 @@
             goEasy.subscribe({
                 channel: "shuijiao",
                 onMessage: function (message) {
-                    var p ='<p>'+message.content+'</p>';
+                    var p = '<p>' + message.content + '</p>';
                     $('#heihei').append(p);
                     //$('html, body').animate({scrollTop: $('#heihei').height()}, 50);
-                    if(message.content!=null){
+                    if (message.content != null) {
                         //var he=$('#heihei').height;
-                        $('#heihei')[0].scrollTop=$('#heihei')[0].scrollHeight;
+                        $('#heihei')[0].scrollTop = $('#heihei')[0].scrollHeight;
                     }
                 },
             });
-           /* goEasy.subscribePresence({
-                channel: "shuijiao",
-                onPresence: function(presenceEvents){
-                    console.log("Presence events: ", JSON.stringify(presenceEvents));
-                }
-            });*/
+            /* goEasy.subscribePresence({
+                 channel: "shuijiao",
+                 onPresence: function(presenceEvents){
+                     console.log("Presence events: ", JSON.stringify(presenceEvents));
+                 }
+             });*/
 
 
             $('#btn').click(function () {
-                var ss=$('#mes').val();
+                var ss = $('#mes').val();
                 //消息发送
                 goEasy.publish({
                     channel: "shuijiao", //替换为您自己的channel
@@ -66,7 +66,8 @@
 <body>
 <div>
     <div style="overflow:scroll;width: 500px; height: 600px" id="heihei"></div>
-    <input type="text" id="mes">||||||<button type="button" id="btn">发送</button>
+    <input type="text" id="mes">||||||
+    <button type="button" id="btn">发送</button>
 </div>
 
 </body>

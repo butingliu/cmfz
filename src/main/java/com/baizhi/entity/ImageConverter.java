@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ImageConverter extends StringImageConverter {
     @Override
     public CellData convertToExcelData(String value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws IOException {
-        System.out.println(value+"---------------------");
+        System.out.println(value + "---------------------");
         return new CellData(FileUtils.readFileToByteArray(new File(value)));
     }
 }

@@ -2,10 +2,8 @@ package com.baizhi;
 
 import com.baizhi.annotation.LogAnnotation;
 import com.baizhi.entity.Banner;
-import lombok.Data;
 import org.junit.Test;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class TestAnnotation {
@@ -21,22 +19,24 @@ public class TestAnnotation {
         }
         System.out.println(value1);
         Method[] declaredMethods = aClass.getDeclaredMethods();
-        for (int i = 0; i <declaredMethods.length ; i++) {
+        for (int i = 0; i < declaredMethods.length; i++) {
             Method declaredMethod = declaredMethods[i];
-            if (declaredMethod.isAnnotationPresent(LogAnnotation.class)){
+            if (declaredMethod.isAnnotationPresent(LogAnnotation.class)) {
                 LogAnnotation annotation = declaredMethod.getAnnotation(LogAnnotation.class);
                 String value = annotation.value();
-                System.out.println(value+"--");
+                System.out.println(value + "--");
             }
         }
     }
 }
 
-@LogAnnotation(value = "bbbb",getClass1 = {Demo.class, Banner.class})
-class Demo{
+@LogAnnotation(value = "bbbb", getClass1 = {Demo.class, Banner.class})
+class Demo {
     private String name;
     private String[] s;
+
     @LogAnnotation("aaaa")
 
-    public void getName(){}
+    public void getName() {
+    }
 }

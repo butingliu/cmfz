@@ -9,6 +9,6 @@
     <title>持名法舟后台管理系统</title>
 </head>
 <body>
-    <h1>Hello World</h1>
+<h1>Hello World</h1>
 </body>
 </html>

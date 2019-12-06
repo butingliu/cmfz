@@ -50,72 +50,72 @@
             })
         },"json")
     </script>--%>
-        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-        <div id="main" style="width: 600px;height:400px;"></div>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-                var goEasy = new GoEasy({
-                    host:'hangzhou.goeasy.io', //应用所在的区域地址: 【hangzhou.goeasy.io |singapore.goeasy.io】
-                    appkey: "BC-de6afd1d1d3649e49dc345c422be940b", //替换为您的应用appkey
+        var goEasy = new GoEasy({
+            host: 'hangzhou.goeasy.io', //应用所在的区域地址: 【hangzhou.goeasy.io |singapore.goeasy.io】
+            appkey: "BC-de6afd1d1d3649e49dc345c422be940b", //替换为您的应用appkey
 
 
-                });
-                goEasy.subscribe({
-                    channel: "shuijiao",
-                    onMessage: function (message) {
-                        var c = JSON.parse(message.content);
-                        myChart.setOption({
-                            series:[
-                                {
-                                    name: '男',
-                                    type: 'bar',
-                                    data: c.man,
-                                },{
-                                    name: '女',
-                                    type: 'bar',
-                                    data: c.woman,
-                                }
-                            ]
-                        })
-                    },
-                });
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('main'));
-
-            var option = {
-                title: {
-                    text: 'ECharts 入门示例'
-                },
-                tooltip: {},
-                legend: {
-                    data:['男','女']
-                },
-                xAxis: {
-                    data: ["1天","7天","30天","1年"]
-                },
-                yAxis: {},
-                series: [],
-            };
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-            // Ajax异步数据回显
-            $.get("${pageContext.request.contextPath}/user/xushi",function (data) {
-                console.table(data);
+        });
+        goEasy.subscribe({
+            channel: "shuijiao",
+            onMessage: function (message) {
+                var c = JSON.parse(message.content);
                 myChart.setOption({
-                    series:[
+                    series: [
                         {
                             name: '男',
                             type: 'bar',
-                            data: data.man,
-                        },{
+                            data: c.man,
+                        }, {
                             name: '女',
                             type: 'bar',
-                            data: data.woman,
+                            data: c.woman,
                         }
                     ]
                 })
-            },"json")
-        </script>
+            },
+        });
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data: ['男', '女']
+            },
+            xAxis: {
+                data: ["1天", "7天", "30天", "1年"]
+            },
+            yAxis: {},
+            series: [],
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        // Ajax异步数据回显
+        $.get("${pageContext.request.contextPath}/user/xushi", function (data) {
+            console.table(data);
+            myChart.setOption({
+                series: [
+                    {
+                        name: '男',
+                        type: 'bar',
+                        data: data.man,
+                    }, {
+                        name: '女',
+                        type: 'bar',
+                        data: data.woman,
+                    }
+                ]
+            })
+        }, "json")
+    </script>
 </div>

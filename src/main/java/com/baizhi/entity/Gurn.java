@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Gurn implements Serializable {
     @Id
-    @KeySql(sql = "select uuid()",order = ORDER.BEFORE)
+    @KeySql(sql = "select uuid()", order = ORDER.BEFORE)
     private String id;
     private String name;
     private String nick;

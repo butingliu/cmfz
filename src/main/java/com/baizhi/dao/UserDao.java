@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserDao extends Mapper<User> {
     Integer selectUserBySexAndDay(
             @Param("sex") String sex,
-            @Param("da")Integer da);
+            @Param("da") Integer da);
+
     List<MapVo> selectUserBySexAndAddress();
 }

@@ -22,8 +22,9 @@ public class LogAspact {
     private HttpServletRequest request;
     @Autowired
     private LogDao logDao;
+
     @Around("@annotation(com.baizhi.annotation.LogAnnotation)")
-    public Object addLog(ProceedingJoinPoint proceedingJoinPoint){
+    public Object addLog(ProceedingJoinPoint proceedingJoinPoint) {
         Admin admin = (Admin) request.getSession().getAttribute("admin");
         String username = admin.getUsername();
         Date date = new Date();
@@ -35,7 +36,7 @@ public class LogAspact {
         Log log = new Log().setId(s).setUsername(username).setTime_date(date).setMethodname(name).setVa(value);
         try {
             Object proceed = proceedingJoinPoint.proceed();
-            String status="success";
+            String status = "success";
             log.setStatus(status);
             logDao.insert(log);
             return proceed;

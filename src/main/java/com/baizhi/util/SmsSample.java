@@ -10,23 +10,34 @@ import java.security.NoSuchAlgorithmException;
 
 public class SmsSample {
 
-	public void qq(String phone,String code){
-		String testUsername = "hife"; //在短信宝注册的用户名
-		String testPassword = "yasuo56789"; //在短信宝注册的密码
-		String testPhone = phone;
-		String testContent = "【亚氏集团】您的验证码是"+code+",５分钟内有效。若非本人操作请忽略此消息。"; // 注意测试时，也请带上公司简称或网站签名，发送正规内容短信。千万不要发送无意义的内容：例如 测一下、您好。否则可能会收不到
+    public static String request(String httpUrl, String httpArg) {
+        BufferedReader reader = null;
+        String result = null;
+        StringBuffer sbf = new StringBuffer();
+        httpUrl = httpUrl + "?" + httpArg;
 
-		String httpUrl = "http://api.smsbao.com/sms";
-
-		StringBuffer httpArg = new StringBuffer();
-		httpArg.append("u=").append(testUsername).append("&");
-		httpArg.append("p=").append(md5(testPassword)).append("&");
-		httpArg.append("m=").append(testPhone).append("&");
-		httpArg.append("c=").append(encodeUrlString(testContent, "UTF-8"));
-
-		String result = request(httpUrl, httpArg.toString());
-		System.out.println(result);
-	}
+        try {
+            URL url = new URL(httpUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            InputStream is = connection.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String strRead = reader.readLine();
+            if (strRead != null) {
+                sbf.append(strRead);
+                while ((strRead = reader.readLine()) != null) {
+                    sbf.append("\n");
+                    sbf.append(strRead);
+                }
+            }
+            reader.close();
+            result = sbf.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 	/*public static void main(String[] args) {
 
 		String testUsername = "hife"; //在短信宝注册的用户名
@@ -46,67 +57,56 @@ public class SmsSample {
 		System.out.println(result);
 	}*/
 
-	public static String request(String httpUrl, String httpArg) {
-		BufferedReader reader = null;
-		String result = null;
-		StringBuffer sbf = new StringBuffer();
-		httpUrl = httpUrl + "?" + httpArg;
+    public static String md5(String plainText) {
+        StringBuffer buf = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(plainText.getBytes());
+            byte b[] = md.digest();
+            int i;
+            buf = new StringBuffer("");
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return buf.toString();
+    }
 
-		try {
-			URL url = new URL(httpUrl);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-			InputStream is = connection.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-			String strRead = reader.readLine();
-			if (strRead != null) {
-				sbf.append(strRead);
-				while ((strRead = reader.readLine()) != null) {
-					sbf.append("\n");
-					sbf.append(strRead);
-				}
-			}
-			reader.close();
-			result = sbf.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+    public static String encodeUrlString(String str, String charset) {
+        String strret = null;
+        if (str == null)
+            return str;
+        try {
+            strret = java.net.URLEncoder.encode(str, charset);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return strret;
+    }
 
-	public static String md5(String plainText) {
-		StringBuffer buf = null;
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(plainText.getBytes());
-			byte b[] = md.digest();
-			int i;
-			buf = new StringBuffer("");
-			for (int offset = 0; offset < b.length; offset++) {
-				i = b[offset];
-				if (i < 0)
-					i += 256;
-				if (i < 16)
-					buf.append("0");
-				buf.append(Integer.toHexString(i));
-			}
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return buf.toString();
-	}
+    public void qq(String phone, String code) {
+        String testUsername = "hife"; //在短信宝注册的用户名
+        String testPassword = "yasuo56789"; //在短信宝注册的密码
+        String testPhone = phone;
+        String testContent = "【亚氏集团】您的验证码是" + code + ",５分钟内有效。若非本人操作请忽略此消息。"; // 注意测试时，也请带上公司简称或网站签名，发送正规内容短信。千万不要发送无意义的内容：例如 测一下、您好。否则可能会收不到
 
-	public static String encodeUrlString(String str, String charset) {
-		String strret = null;
-		if (str == null)
-			return str;
-		try {
-			strret = java.net.URLEncoder.encode(str, charset);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		return strret;
-	}
+        String httpUrl = "http://api.smsbao.com/sms";
+
+        StringBuffer httpArg = new StringBuffer();
+        httpArg.append("u=").append(testUsername).append("&");
+        httpArg.append("p=").append(md5(testPassword)).append("&");
+        httpArg.append("m=").append(testPhone).append("&");
+        httpArg.append("c=").append(encodeUrlString(testContent, "UTF-8"));
+
+        String result = request(httpUrl, httpArg.toString());
+        System.out.println(result);
+    }
 }

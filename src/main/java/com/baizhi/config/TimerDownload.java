@@ -12,26 +12,25 @@ import org.springframework.stereotype.Component;
 public class TimerDownload {
     @Autowired
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+
     @Bean
-    public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
+    public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
         return new ThreadPoolTaskScheduler();
     }
-    public void run(){
+
+    public void run() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 System.out.println("123123");
             }
         };
-        threadPoolTaskScheduler.schedule(runnable,new CronTrigger("0/5 * * * * *"));
+        threadPoolTaskScheduler.schedule(runnable, new CronTrigger("0/5 * * * * *"));
     }
-    public void shutdown(){
+
+    public void shutdown() {
         threadPoolTaskScheduler.shutdown();
     }
-
-
-
-
 
 
 }

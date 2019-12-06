@@ -20,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Article implements Serializable {
     @Id
-    @KeySql(sql = "select uuid()",order = ORDER.BEFORE)
+    @KeySql(sql = "select uuid()", order = ORDER.BEFORE)
     private String id;
     private String title;
     private String content;

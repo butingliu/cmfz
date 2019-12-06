@@ -24,12 +24,12 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public List<Banner> queryBannerByRows(String searchField, String searchString, String searchOper, Integer page, Integer rows) {
-        return bannerDao.queryBannerByRows(searchField,searchString,searchOper,page,rows);
+        return bannerDao.queryBannerByRows(searchField, searchString, searchOper, page, rows);
     }
 
     @Override
     public List<Banner> queryBannerCount(String searchField, String searchString, String searchOper) {
-        return bannerDao.queryBannerCount(searchField,searchString,searchOper);
+        return bannerDao.queryBannerCount(searchField, searchString, searchOper);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BannerServiceImpl implements BannerService {
     @Override
     @LogAnnotation("展示轮播图列表")
     public List<Banner> queryBannerByPage(Integer page, Integer rows) {
-        return bannerDao.selectByRowBounds(new Banner(),new RowBounds(page,rows));
+        return bannerDao.selectByRowBounds(new Banner(), new RowBounds(page, rows));
     }
 
     @Override

@@ -20,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class User implements Serializable {
     @Id
-    @KeySql(sql = "select uuid()",order = ORDER.BEFORE)
+    @KeySql(sql = "select uuid()", order = ORDER.BEFORE)
     private String id;
     private String phnoe;
     private String pwd;
@@ -34,11 +34,11 @@ public class User implements Serializable {
     private String avator;
     private String address;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss", timezone = "GMT+8")
     @Column(name = "create_date")
     private Date create_date;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss", timezone = "GMT+8")
     @Column(name = "exit_date")
     private Date exit_date;
 }

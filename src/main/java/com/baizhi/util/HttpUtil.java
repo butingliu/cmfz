@@ -15,19 +15,19 @@ public class HttpUtil {
         1. 获取上传文件的网络路径
         2. 上传文件
      */
-    public static String getHttpUrl(MultipartFile file, HttpServletRequest request, HttpSession session, String dir){
+    public static String getHttpUrl(MultipartFile file, HttpServletRequest request, HttpSession session, String dir) {
         // 获取路径
         String realPath = session.getServletContext().getRealPath(dir);
         // 判断路径文件夹是否存在
         File f = new File(realPath);
-        if(!f.exists()){
+        if (!f.exists()) {
             f.mkdirs();
         }
         // 防止重名操作
         String originalFilename = file.getOriginalFilename();
-        originalFilename = new Date().getTime()+"_"+originalFilename;
+        originalFilename = new Date().getTime() + "_" + originalFilename;
         try {
-            file.transferTo(new File(realPath,originalFilename));
+            file.transferTo(new File(realPath, originalFilename));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class HttpUtil {
         int serverPort = request.getServerPort();
         String contextPath = request.getContextPath();
         // 网络路径拼接
-        String uri = http+"://"+localHost.split("/")[1]+":"+serverPort+contextPath+dir+originalFilename;
+        String uri = http + "://" + localHost.split("/")[1] + ":" + serverPort + contextPath + dir + originalFilename;
         return uri;
     }
 }

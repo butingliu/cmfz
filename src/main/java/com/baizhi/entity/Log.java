@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Log implements Serializable {
     @Id
-    @KeySql(sql = "select uuid()",order = ORDER.BEFORE)
+    @KeySql(sql = "select uuid()", order = ORDER.BEFORE)
     private String id;
     @Column(name = "username")
     private String username;

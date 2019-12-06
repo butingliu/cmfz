@@ -22,7 +22,7 @@ public class GurnServiceImpl implements GurnService {
 
     @Override
     public List<Gurn> queryGurnByPage(Integer page, Integer rows) {
-        return gurnDao.selectByRowBounds(new Gurn(),new RowBounds((page-1)*rows,rows));
+        return gurnDao.selectByRowBounds(new Gurn(), new RowBounds((page - 1) * rows, rows));
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.util.List;
 public class GoEasyAspact {
     @Autowired
     private UserService userService;
+
     @Around("@annotation(com.baizhi.annotation.GoEasyAnnotation)")
     public Object qq(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
@@ -43,12 +44,12 @@ public class GoEasyAspact {
         list1.add(day30y);
         list1.add(day365y);
         List<MapVo> ditu = userService.queryUserBySexAndAddress();
-        map.put("man",list);
-        map.put("woman",list1);
-        map.put("ditu",ditu);
-        GoEasy goEasy = new GoEasy("http://rest-hangzhou.goeasy.io","BC-de6afd1d1d3649e49dc345c422be940b");
+        map.put("man", list);
+        map.put("woman", list1);
+        map.put("ditu", ditu);
+        GoEasy goEasy = new GoEasy("http://rest-hangzhou.goeasy.io", "BC-de6afd1d1d3649e49dc345c422be940b");
         String s = new Gson().toJson(map);
-        goEasy.publish("shuijiao",s);
+        goEasy.publish("shuijiao", s);
         System.out.println(":运行的goeasy=============");
         return null;
     }

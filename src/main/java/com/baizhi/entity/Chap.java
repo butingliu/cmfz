@@ -20,9 +20,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class Chap implements Serializable {
     @Id
-    @KeySql(sql = "select uuid()",order = ORDER.BEFORE)
+    @KeySql(sql = "select uuid()", order = ORDER.BEFORE)
     private String id;
-    private  String name;
+    private String name;
     private String bigs;
     private String times;
     private String pic;

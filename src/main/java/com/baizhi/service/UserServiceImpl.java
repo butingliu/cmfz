@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> queryUserByPage(Integer page, Integer rows) {
-        return userDao.selectByRowBounds(new User(),new RowBounds((page-1)*rows,rows));
+        return userDao.selectByRowBounds(new User(), new RowBounds((page - 1) * rows, rows));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer queryUserBySexAndDay(String se, Integer da) {
-        return userDao.selectUserBySexAndDay(se,da);
+        return userDao.selectUserBySexAndDay(se, da);
     }
 
     @Override

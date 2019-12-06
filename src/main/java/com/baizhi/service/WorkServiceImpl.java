@@ -11,6 +11,7 @@ import java.util.List;
 public class WorkServiceImpl implements WorkService {
     @Autowired
     private WorkDao workDao;
+
     @Override
     public List<Work> queryAllWorkByUser(String uid) {
         return workDao.selectByExample(new Work().setUser_id(uid));

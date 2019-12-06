@@ -5,7 +5,6 @@ import com.baizhi.service.AdminService;
 import com.baizhi.util.KaptchaConfig;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,30 +23,32 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private KaptchaConfig kaptchaConfig;
-    @RequestMapping("login")
-    public String login(String vrifyCode,String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String captchaId = (String) request.getSession().getAttribute("vrifyCode");
 
+    @RequestMapping("login")
+    public String login(String vrifyCode, String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String captchaId = (String) request.getSession().getAttribute("vrifyCode");
+        System.out.println("吃饭");
 
         Admin admin = adminService.queryAdminByName(username);
         if (!captchaId.equals(vrifyCode)) {
             return "验证码错误";
         }
-        if(admin==null){
+        if (admin == null) {
             return "用户不存在";
-        }else {
-            if(!admin.getPassword().equals(password)){
+        } else {
+            if (!admin.getPassword().equals(password)) {
                 return "密码错误";
-            }else{
-                request.getSession().setAttribute("admin",admin);
+            } else {
+                request.getSession().setAttribute("admin", admin);
                 return "";
             }
         }
 
 
     }
+
     @RequestMapping("/defaultKaptcha")
-    public void defaultKaptcha(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception{
+    public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         DefaultKaptcha defaultKaptcha = kaptchaConfig.getDefaultKaptcha();
         byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();

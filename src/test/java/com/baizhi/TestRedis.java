@@ -15,8 +15,9 @@ import java.util.Set;
 public class TestRedis {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Test
-    public void qq(){
+    public void qq() {
 //        System.out.println("--------------"+stringRedisTemplate);
         stringRedisTemplate.setStringSerializer(new StringRedisSerializer());
         stringRedisTemplate.setKeySerializer(new StringRedisSerializer());

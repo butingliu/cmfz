@@ -37,7 +37,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<Album> queryAlbumByPage(Integer page, Integer rows) {
-        return albumDao.selectByRowBounds(new Album(),new RowBounds((page-1)*rows,rows));
+        return albumDao.selectByRowBounds(new Album(), new RowBounds((page - 1) * rows, rows));
     }
 
     @Override
