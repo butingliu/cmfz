@@ -4,6 +4,7 @@ import com.baizhi.dao.WorkDao;
 import com.baizhi.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List<Work> queryAllWorkByUser(String uid) {
-        return workDao.selectByExample(new Work().setUser_id(uid));
+        Example example = new Example(Work.class);
+        example.createCriteria().andEqualTo("user_id", uid).orEqualTo("ty", "0");
+        return workDao.selectByExample(example);
     }
 
     @Override
