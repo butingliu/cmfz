@@ -88,10 +88,10 @@ public class FrontController {
         try {
             String s = stringRedisTemplate.opsForValue().get(phone);
             if (code.equals(s)) {
-                String id = UUID.randomUUID().toString().replace("-", "");
+                /*String id = UUID.randomUUID().toString().replace("-", "");
                 User user = new User();
                 user.setId(id).setPhnoe(phone);
-                userService.insertUser(user);
+                userService.insertUser(user);*/
                 map.put("status", "200");
                 return map;
             } else {
@@ -111,6 +111,8 @@ public class FrontController {
         //4.补充个人信息接口
         HashMap map = new HashMap<>();
         try {
+            String id = UUID.randomUUID().toString().replace("-", "");
+            user.setId(id);
             userService.insertUser(user);
             map.put("user", user);
             map.put("status", "200");
