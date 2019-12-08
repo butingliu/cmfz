@@ -68,10 +68,19 @@ public class RedisAspact {
     }*/
     @Around("@annotation(com.baizhi.annotation.RedisRemoveAnnotation)")
     public Object removeRedis(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
         Object proceed = proceedingJoinPoint.proceed();
         //获得类名
         String className = proceedingJoinPoint.getSignature().getDeclaringTypeName();
-        template.opsForHash().delete(className);
+        System.out.println(className + "999999999999999");
+        //查询key是否存在
+        Boolean aBoolean = template.hasKey(className);
+        System.out.println(aBoolean);
+        if (aBoolean) {
+            //template.opsForHash().delete(className);
+            template.delete(className);
+        }
+
         return proceed;
     }
 }
