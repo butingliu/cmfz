@@ -1,5 +1,6 @@
 package com.baizhi.controller;
 
+import com.baizhi.config.TimerDownload;
 import com.baizhi.entity.Admin;
 import com.baizhi.service.AdminService;
 import com.baizhi.util.KaptchaConfig;
@@ -23,7 +24,8 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private KaptchaConfig kaptchaConfig;
-
+    @Autowired
+    private TimerDownload timerDownload;
     @RequestMapping("login")
     public String login(String vrifyCode, String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String captchaId = (String) request.getSession().getAttribute("vrifyCode");
@@ -40,6 +42,8 @@ public class AdminController {
             if (!admin.getPassword().equals(password)) {
                 return "密码错误";
             } else {
+                //测试事件性定时器开启
+                timerDownload.run();
                 request.getSession().setAttribute("admin", admin);
                 return "";
             }

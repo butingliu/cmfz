@@ -2,13 +2,13 @@ package com.baizhi.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 @Component
-@Async
+//@Async
+//hei
 public class TimerDownload {
     @Autowired
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;

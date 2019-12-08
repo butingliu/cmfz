@@ -3,6 +3,7 @@ package com.baizhi.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.baizhi.config.TimerDownload;
 import com.baizhi.entity.Banner;
 import com.baizhi.entity.Banner1;
 import com.baizhi.service.BannerService;
@@ -29,6 +30,8 @@ public class BannerController {
     //private String fileName=
     @Autowired
     private BannerService bannerService;
+    @Autowired
+    private TimerDownload timerDownload;
 
     @RequestMapping("showbanner")
     public Map<String, Object> showBanner(String searchField, String searchString, String searchOper, Integer page, Integer records, Integer rows, Boolean _search) {
@@ -48,6 +51,8 @@ public class BannerController {
             map.put("rows",list);
             return map;
         }else{*/
+        //测试事件性定时器关闭
+        timerDownload.shutdown();
         List<Banner> banners = bannerService.queryAllBanner();
         Integer sq = banners.size();
         Integer a = 0;
