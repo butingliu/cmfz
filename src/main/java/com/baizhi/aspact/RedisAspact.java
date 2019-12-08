@@ -11,6 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.annotation.Resource;
 
+//再一次
 @Aspect
 @Configuration
 public class RedisAspact {
